@@ -55,6 +55,17 @@ app.route("/articles")
         });
     });
 
+app.route("/articles/:articleTitle")
+    .get((req, res) => {
+        Article.findOne({
+            title: req.params.articleTitle
+        }).then((article) => {
+            res.json(article);
+        }).catch((err) => {
+            res.json(err);
+        });
+    });
+
 app.listen(3000, () => {
     console.log("Server running on http://127.0.0.1:3000");
 });
