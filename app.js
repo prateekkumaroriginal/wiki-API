@@ -64,7 +64,31 @@ app.route("/articles/:articleTitle")
         }).catch((err) => {
             res.json(err);
         });
-    });
+    })
+    .put((req, res) => {
+        Article.findOneAndUpdate(
+            { title: req.params.articleTitle },
+            {
+                title: req.body.title,
+                content: req.body.content,
+            },
+            { overwrite: true }
+        ).then((response) => {
+            res.json(response)
+        }).catch((err) => {
+            res.json(err)
+        })
+    })
+    .patch((req, res) => {
+        Article.findOneAndUpdate(
+            { title: req.params.articleTitle },
+            { $set: req.body },
+        ).then((response) => {
+            res.json(response)
+        }).catch((err) => {
+            res.json(err)
+        })
+    })
 
 app.listen(3000, () => {
     console.log("Server running on http://127.0.0.1:3000");
